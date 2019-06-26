@@ -5,7 +5,7 @@
 //v8支持maxv 指令直接求出向量寄存器中的最大值，而在v7 架构中需要借助通用寄存器复制 然后使用maxp 指令求出最大值
 int main()
 {
-	//neon汇编不支持使用数组名作为指针传递，汇编中会改变num的值
+    //neon汇编不支持使用数组名作为指针传递，汇编中会改变num的值
     float num[16] = {1,3,4,5,6,2,7,7,4,10,12,13,15,16,18};
     float* src = (float*)malloc(sizeof(float)* 16);
     float* src_old = src;
@@ -22,11 +22,11 @@ int main()
             "subs %w[i],%w[i],#1 \n" //subs 影响状态寄存器
             "bne  0b             \n" //需要使用0b 进行跳转
             "fmaxv s0,v0.4s      \n" //use fmaxv/smaxv get max value cross the vector register v8 only
-            "fmov  %w[max],s0      \n" //usr fmov from s0 to reguler register v8 only
+            "fmov  %w[max],s0    \n" //usr fmov from s0 to reguler register v8 only
             :[max]"+r"(max),
              [i]"+r"(nn),
              [src]"+r"(src)
-            :  //如果不使用malloc 分配内存的话可以把num传递到这里， ld1的时候记得加上offset
+            :[num]"r"(num) //如果不使用malloc 分配内存的话可以把num传递到这里， ld1的时候记得加上offset
             :"cc","memory","v0","v1","w0","s0"
     );
     printf("max value is %f \n",max);
