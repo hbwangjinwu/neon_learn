@@ -174,7 +174,7 @@ void meanstddev_S16(short* input,int width, int height, int step1, float* mean, 
              "dup v2.4s,%w[mean]     \n"
              "0:                     \n"
              "ld1  {v1.4h},[%[src]]  \n"
-             "saddl  v1.4s,v1.4h,v3.4h \n" // !!! trick !!! 使用addl 加0的技巧把16位数转为32位
+             "saddl  v1.4s,v1.4h,v3.4h \n" // !!! trick !!! 使用addl 加0的技巧把16位数转为32位  use movl get the same result
              "scvtf v1.4s,v1.4s \n"
              "fsub   v1.4s,v1.4s,v2.4s \n"
              "fmla   v0.4s,v1.4s,v1.4s \n"
