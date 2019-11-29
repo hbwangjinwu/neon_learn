@@ -13,7 +13,7 @@ int main()
             "0:             \n"
             "ld1 {v1.4s},[%[num]]    \n"
             "cmgt v2.4s,v1.4s,v0.4s  \n"
-            "bsl  v2.16b,v1.16b,v0.16b  \n"//bsl must byte
+            "bsl  v2.16b,v1.16b,v0.16b  \n"//bsl must byte bsl select
             "st1 {v2.4s},[%[num]],#16 \n"
             "subs %w[i],%w[i],#1 \n" //subs 影响状态寄存器
             "bne  0b             \n" //需要使用0b 进行跳转
